@@ -1,0 +1,15 @@
+{
+  "name": "rocket-launch-schedule",
+  "version": "1.0.0",
+  "description": "Rocket launch schedule web-scraper",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Rajdeep Ray",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "cheerio": "^1.0.0-rc.3"
+  }
+}
