@@ -29,8 +29,14 @@ var rocket_schedules = [];
                     schedule_list.push($(e).text());
                 })
 
+                let provider_list = [];
+                $('div[class="rlt-provider"]').each((i, e) => {
+                    provider_list.push($(e).text());
+                })
+
                 for (let i = 0; i < rocket_details.length; i++) {
                     rocket_details[i]['schedule'] = schedule_list[i];
+                    rocket_details[i]['provider'] = provider_list[i];
                     rocket_schedules.push(rocket_details[i])
                 }
                 // console.log(rocket_details);
