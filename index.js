@@ -60,4 +60,31 @@ var rocket_schedules = [];
         console.log("File Created!");
     });
 
+    const fields = [{
+        label: 'Mission',
+        value: 'mission'
+    }, {
+        label: 'Vehicle',
+        value: 'vehicle'
+    }, {
+        label: 'Schedule',
+        value: 'schedule'
+    }, {
+        label: 'Provider',
+        value: 'provider'
+    }, {
+        label: 'Location',
+        value: 'location',
+    }];
+
+    const json2csvParser = new Parser({ fields })
+    const csv = json2csvParser.parse(rocket_schedules);
+    // console.log(csv);
+    fs.writeFile("rocket-schedule.csv", csv, (err) => {
+        if (err) {
+            throw err;
+        }
+        console.log("File Created!");
+    });
+
 })();
