@@ -1,5 +1,7 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
+const { Parser } = require('json2csv');
+const fs = require('fs');
 
 const url = "https://www.rocketlaunch.live/";
 
@@ -36,9 +38,9 @@ var rocket_schedules = [];
 
                 let location_list = [];
                 $('div[class="rlt-location"]').each((i, e) => {
-                    location_list.push($(e).text().trim().replace('\n',', '));
+                    location_list.push($(e).text().trim().replace('\n', ', '));
                 })
-                
+
                 for (let i = 0; i < rocket_details.length; i++) {
                     rocket_details[i]['schedule'] = schedule_list[i];
                     rocket_details[i]['provider'] = provider_list[i];
@@ -51,4 +53,11 @@ var rocket_schedules = [];
             });
     }
     console.log(rocket_schedules);
+    fs.writeFile("rocket-schedule.json", JSON.stringify(rocket_schedules), (err) => {
+        if (err) {
+            throw err;
+        }
+        console.log("File Created!");
+    });
+
 })();
