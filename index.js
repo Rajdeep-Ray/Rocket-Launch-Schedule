@@ -2,12 +2,33 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const { Parser } = require('json2csv');
 const fs = require('fs');
+const ora = require('ora');
 
 const url = "https://www.rocketlaunch.live/";
 
 var rocket_schedules = [];
 
 (async () => {
+
+    const spinner = ora({
+        text: 'Extracting data..',
+        spinner: {
+            "interval": 80,
+            "frames": [
+                "⠋",
+                "⠙",
+                "⠹",
+                "⠸",
+                "⠼",
+                "⠴",
+                "⠦",
+                "⠧",
+                "⠇",
+                "⠏"
+            ]
+        }
+    }).start();
+    
     for (let i = 1; i < 8; i++) {
         await axios.get(url + '?page=' + i)
             .then((res) => {
@@ -53,11 +74,14 @@ var rocket_schedules = [];
             });
     }
     console.log(rocket_schedules);
+    spinner.succeed('Data Collected!')
     fs.writeFile("rocket-schedule.json", JSON.stringify(rocket_schedules), (err) => {
         if (err) {
             throw err;
         }
-        console.log("File Created!");
+        // console.log("File Created!");
+        spinner.succeed('JSON file created!')
+
     });
 
     const fields = [{
@@ -84,7 +108,9 @@ var rocket_schedules = [];
         if (err) {
             throw err;
         }
-        console.log("File Created!");
+        // console.log("File Created!");
+        spinner.succeed('CSV file created!')
     });
+    spinner.stop()
 
 })();
